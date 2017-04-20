@@ -155,16 +155,16 @@ void PCF8814::begin(unsigned char width, unsigned char height)
 	digitalWrite(this->pin_sce,   HIGH);
 	digitalWrite(this->pin_sclk,   LOW);
 	
-    this->send(PCF8814_CMD, LCD_SOFT_RESET); 
-    this->send(PCF8814_CMD, LCD_EXT_OSC); 
-    this->send(PCF8814_CMD, LCD_FRAME_FREQ); 
-    this->send(PCF8814_CMD, LCD_PARTIAL_DISPLAY); 
+	this->send(PCF8814_CMD, LCD_SOFT_RESET); 
+	this->send(PCF8814_CMD, LCD_EXT_OSC); 
+	this->send(PCF8814_CMD, LCD_FRAME_FREQ); 
+	this->send(PCF8814_CMD, LCD_PARTIAL_DISPLAY); 
 	this->send(PCF8814_CMD, LCD_CHARGE_PUMP_ON);
 	
 	this->setContrast(LCD_CONTRAST);
-	rotate(false);
+	   rotate(false);
 	this->lcd_on();
-	delay(200);
+	   delay(200);
 	this->clear();
 }
 
@@ -172,8 +172,8 @@ void PCF8814::send(unsigned char type, unsigned char data)
 {
     digitalWrite(this->pin_sdin, type);
     digitalWrite(this->pin_sce, LOW);
-	digitalWrite(this->pin_sclk, HIGH);
-	digitalWrite(this->pin_sclk, LOW);
+    digitalWrite(this->pin_sclk, HIGH);
+    digitalWrite(this->pin_sclk, LOW);
     shiftOut(this->pin_sdin, this->pin_sclk, MSBFIRST, data);
     digitalWrite(this->pin_sce, HIGH);
 }
@@ -183,14 +183,15 @@ void PCF8814::setCursor(unsigned char column, unsigned char line)
     this->column = (column % this->width);
     this->line = (line % (this->height/9 + 1));
 
-	this->send(PCF8814_CMD, LCD_CHANGE_ROW_LSB | ( this->column & 0x0F));
-	this->send(PCF8814_CMD, LCD_CHANGE_ROW_MSB | ( (this->column >> 4) & 0x07 ));
+    this->send(PCF8814_CMD, LCD_CHANGE_ROW_LSB | ( this->column & 0x0F));
+    this->send(PCF8814_CMD, LCD_CHANGE_ROW_MSB | ( (this->column >> 4) & 0x07 ));
     this->send(PCF8814_CMD, LCD_CHANGE_COL | ( this->line & 0x0F ));
 }
 
 void PCF8814::home()
 {
 	this->setCursor(0,0);
+	// this->setCursor(0, this->line);
 }
 
 void PCF8814::refresh()
@@ -430,11 +431,6 @@ inline void PCF8814::noDisplay()
     this->setPower(false);
 }
 
-
-void PCF8814::home()
-{
-    this->setCursor(0, this->line);
-}
 
 void PCF8814::bitmap(const unsigned char *data, unsigned char columns, unsigned char lines)
 {
