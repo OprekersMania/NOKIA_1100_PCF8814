@@ -83,7 +83,6 @@ class PCF8814: public Print {
 		
 				//*************** FUNCTION IN CPP IS DISABLE, UNCOMMENT TO ACTIVATE *****************
         // void bitmap(const unsigned char *data, unsigned char columns, unsigned char lines);
-        // void home();
         // void stop();
         // void setPower(bool on);
         // void display();
